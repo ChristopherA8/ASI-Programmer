@@ -1,0 +1,15 @@
+// Draw bitmap
+int pixel = 0;
+for (int column = 0; column < imageOne.height; column++)
+{
+  for (int row = 0; row < imageOne.width; row++)
+  {
+    tft.drawPixel(row, column, imageOneBitmap[pixel]);
+    pixel++;
+  }
+}
+
+// Printing format string
+char str[128];
+snprintf(str, 128, "You touched button %d", i);
+Serial.println(str);

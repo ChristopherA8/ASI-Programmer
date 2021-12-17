@@ -1,0 +1,5 @@
+1. Make button classes
+  - Height, Width, Anchor (top left)
+  - Button.draw()
+  - Getters
+  - Setters
