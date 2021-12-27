@@ -36,7 +36,6 @@ typedef struct View
   int16_t width;
   int anchor[2];
   int state;
-  int previousState;
 } view;
 
 typedef struct NumPad
@@ -46,3 +45,6 @@ typedef struct NumPad
 } numpad;
 
 NumPad numbers = {0};
+
+// No touch is 0
+static int state = 0;

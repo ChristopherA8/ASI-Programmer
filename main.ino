@@ -7,7 +7,7 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 // Runs once on reset
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   tft.begin();
   tft.setRotation(2);
@@ -250,7 +250,7 @@ void setup()
     int anchorY = numbers.buttons[i].anchor[1];
 
     char state[50];
-    switch (numbers.buttons[i].previousState)
+    switch (numbers.buttons[i].state)
     {
     case 0:
       strcpy(state, "Unpressed");
@@ -264,7 +264,7 @@ void setup()
     }
 
     char str[128];
-    snprintf(str, 128, "Button %d last state is %s", i, state);
+    snprintf(str, 128, "Button %d state is %s", i, state);
     Serial.println(str);
   }
 }
@@ -293,36 +293,105 @@ void loop()
     break;
   }
 
-  for (int i = 0; i < numbers.buttonCount; i++)
+  switch (state)
   {
-    int previousState = numbers.buttons[i].previousState;
-    int currentState = numbers.buttons[i].state;
-
-    switch (currentState)
+  // No buttons are being touched
+  case 0:
+    for (int i = 0; i < numbers.buttonCount; i++)
     {
-    case Pressed:
-      if (previousState == Unpressed)
+      // On button release
+      if (numbers.buttons[i].state == Pressed)
       {
         char str[128];
-        snprintf(str, 128, "You touched button %d", i);
+        snprintf(str, 128, "Button %d Unpressed", i + 1);
         Serial.println(str);
-        break;
       }
-    case Unpressed:
-      //
-      break;
 
-    default:
-      break;
+      // Reset button states
+      numbers.buttons[i].state = Unpressed;
     }
+    break;
+  case 1:
+    if (numbers.buttons[0].state == Unpressed)
+    {
+      Serial.println("Button 1 Pressed");
+      numbers.buttons[0].state = Pressed;
+    }
+    break;
+  case 2:
+    if (numbers.buttons[1].state == Unpressed)
+    {
+      Serial.println("Button 2 Pressed");
+      numbers.buttons[1].state = Pressed;
+    }
+    break;
+  case 3:
+    if (numbers.buttons[2].state == Unpressed)
+    {
+      Serial.println("Button 3 Pressed");
+      numbers.buttons[2].state = Pressed;
+    }
+    break;
+  case 4:
+    if (numbers.buttons[3].state == Unpressed)
+    {
+      Serial.println("Button 4 Pressed");
+      numbers.buttons[3].state = Pressed;
+    }
+    break;
+  case 5:
+    if (numbers.buttons[4].state == Unpressed)
+    {
+      Serial.println("Button 5 Pressed");
+      numbers.buttons[4].state = Pressed;
+    }
+    break;
+  case 6:
+    if (numbers.buttons[5].state == Unpressed)
+    {
+      Serial.println("Button 6 Pressed");
+      numbers.buttons[5].state = Pressed;
+    }
+    break;
+  case 7:
+    if (numbers.buttons[6].state == Unpressed)
+    {
+      Serial.println("Button 7 Pressed");
+      numbers.buttons[6].state = Pressed;
+    }
+    break;
+  case 8:
+    if (numbers.buttons[7].state == Unpressed)
+    {
+      Serial.println("Button 8 Pressed");
+      numbers.buttons[7].state = Pressed;
+    }
+    break;
+  case 9:
+    if (numbers.buttons[8].state == Unpressed)
+    {
+      Serial.println("Button 9 Pressed");
+      numbers.buttons[8].state = Pressed;
+    }
+    break;
+  case 10:
+    if (numbers.buttons[9].state == Unpressed)
+    {
+      Serial.println("Button 10 Pressed");
+      numbers.buttons[9].state = Pressed;
+    }
+    break;
+  default:
+    break;
   }
 
   if (p.z > ts.pressureThreshhold)
   {
-    // Serial.println(xpos);
-    // Serial.println(ypos);
 
-    tft.drawPixel(xpos, ypos, HX8357_BLACK);
+    // tft.drawPixel(xpos, ypos, HX8357_BLACK);
+
+    // If no button is pressed it will show 0 on the next loop around
+    state = 0;
 
     for (int i = 0; i < numbers.buttonCount; i++)
     {
@@ -332,12 +401,11 @@ void loop()
       int topSide = numbers.buttons[i].anchor[1];
       int rightSide = leftSide + width;
       int bottomSide = topSide + height;
-      int previousButtonState = numbers.buttons[i].previousState;
 
       // If touch is within button bounds
       if (xpos >= leftSide && xpos <= rightSide && ypos >= topSide && ypos <= bottomSide)
       {
-        numbers.buttons[i].state = Pressed;
+        state = i + 1;
       }
     }
   }
