@@ -272,6 +272,8 @@ void setup()
 void loop()
 {
 
+  state = 0;
+
   TSPoint p = ts.getPoint();
   switch (tft.getRotation())
   {
