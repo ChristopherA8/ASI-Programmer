@@ -272,8 +272,6 @@ void setup()
 void loop()
 {
 
-  state = 0;
-
   TSPoint p = ts.getPoint();
   switch (tft.getRotation())
   {
@@ -295,6 +293,40 @@ void loop()
     break;
   }
 
+  checkButtonState(state);
+
+  // Reset button state
+  state = 0;
+
+  if (p.z > PRESSURE_THRESHOLD)
+  {
+
+    // tft.drawPixel(xpos, ypos, HX8357_BLACK);
+
+    // If no button is pressed it will show 0 on the next loop around
+    // state = 0;
+
+    for (int i = 0; i < numbers.buttonCount; i++)
+    {
+      int width = numbers.buttons[i].width;
+      int height = numbers.buttons[i].height;
+      int leftSide = numbers.buttons[i].anchor[0];
+      int topSide = numbers.buttons[i].anchor[1];
+      int rightSide = leftSide + width;
+      int bottomSide = topSide + height;
+
+      // If touch is within button bounds
+      if (xpos >= leftSide && xpos <= rightSide && ypos >= topSide && ypos <= bottomSide)
+      {
+        state = i + 1;
+        // Serial.println(p.z);
+      }
+    }
+  }
+}
+
+void checkButtonState(int state)
+{
   switch (state)
   {
   // No buttons are being touched
@@ -385,30 +417,5 @@ void loop()
     break;
   default:
     break;
-  }
-
-  if (p.z > ts.pressureThreshhold)
-  {
-
-    // tft.drawPixel(xpos, ypos, HX8357_BLACK);
-
-    // If no button is pressed it will show 0 on the next loop around
-    state = 0;
-
-    for (int i = 0; i < numbers.buttonCount; i++)
-    {
-      int width = numbers.buttons[i].width;
-      int height = numbers.buttons[i].height;
-      int leftSide = numbers.buttons[i].anchor[0];
-      int topSide = numbers.buttons[i].anchor[1];
-      int rightSide = leftSide + width;
-      int bottomSide = topSide + height;
-
-      // If touch is within button bounds
-      if (xpos >= leftSide && xpos <= rightSide && ypos >= topSide && ypos <= bottomSide)
-      {
-        state = i + 1;
-      }
-    }
   }
 }

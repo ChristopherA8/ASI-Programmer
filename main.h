@@ -9,6 +9,7 @@
 #define TFT_CS 10
 #define TFT_DC 9
 #define TFT_RST 8
+#define PRESSURE_THRESHOLD 1200
 
 // Pins for touch screen
 #define YP A2
@@ -48,3 +49,5 @@ NumPad numbers = {0};
 
 // No touch is 0
 static int state = 0;
+
+void checkButtonState(int state);
