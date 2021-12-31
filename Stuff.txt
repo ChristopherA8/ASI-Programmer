@@ -13,3 +13,30 @@ for (int column = 0; column < imageOne.height; column++)
 char str[128];
 snprintf(str, 128, "You touched button %d", i);
 Serial.println(str);
+
+// Check button states
+  for (int i = 0; i < numbers.buttonCount; i++)
+  {
+    int width = numbers.buttons[i].width;
+    int height = numbers.buttons[i].height;
+    int anchorX = numbers.buttons[i].anchor[0];
+    int anchorY = numbers.buttons[i].anchor[1];
+
+    char state[50];
+    switch (numbers.buttons[i].state)
+    {
+    case 0:
+      strcpy(state, "Unpressed");
+      break;
+    case 1:
+      strcpy(state, "Pressed");
+      break;
+    default:
+      strcpy(state, "Undefined");
+      break;
+    }
+
+    char str[128];
+    snprintf(str, 128, "Button %d state is %s", i, state);
+    Serial.println(str);
+  }

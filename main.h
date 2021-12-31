@@ -36,7 +36,7 @@ typedef struct View
   int16_t height;
   int16_t width;
   int anchor[2];
-  int state;
+  ButtonState state;
 } view;
 
 typedef struct NumPad

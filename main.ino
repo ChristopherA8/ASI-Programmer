@@ -7,34 +7,16 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 // Runs once on reset
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
+  Serial.setTimeout(50);
 
   tft.begin();
   tft.setRotation(2);
 
   tft.fillScreen(HX8357_WHITE);
 
-  /** BITMAPS
-  typedef struct BitmapImage
-  {
-    int16_t height;
-    int16_t width;
-    uint16_t bitmap[];
-  } bitmapImage;
-
-  bitmapImage imageOne = {0};
-  imageOne.height = 67;
-  imageOne.width = 100;
-
-  // Draw bitmap
-  tft.drawRGBBitmap(0, 0, imageOneBitmap, imageOne.width, imageOne.height);
-  **/
-
   int16_t height = tft.height();
   int16_t width = tft.width();
-
-  Serial.println(height);
-  Serial.println(width);
 
   numbers.buttonCount = 10; // it will be 12 when I add "a" and "b"
 
@@ -241,32 +223,6 @@ void setup()
   tft.setTextColor(HX8357_BLACK);
   tft.setTextSize(3);
   tft.println("0");
-
-  for (int i = 0; i < numbers.buttonCount; i++)
-  {
-    int width = numbers.buttons[i].width;
-    int height = numbers.buttons[i].height;
-    int anchorX = numbers.buttons[i].anchor[0];
-    int anchorY = numbers.buttons[i].anchor[1];
-
-    char state[50];
-    switch (numbers.buttons[i].state)
-    {
-    case 0:
-      strcpy(state, "Unpressed");
-      break;
-    case 1:
-      strcpy(state, "Pressed");
-      break;
-    default:
-      strcpy(state, "Undefined");
-      break;
-    }
-
-    char str[128];
-    snprintf(str, 128, "Button %d state is %s", i, state);
-    Serial.println(str);
-  }
 }
 
 void loop()
@@ -298,8 +254,9 @@ void loop()
   // Reset button state
   state = 0;
 
-  if (p.z > PRESSURE_THRESHOLD)
+  if (p.z > ts.pressureThreshhold)
   {
+    Serial.println(p.z);
 
     // tft.drawPixel(xpos, ypos, HX8357_BLACK);
 
@@ -319,7 +276,6 @@ void loop()
       if (xpos >= leftSide && xpos <= rightSide && ypos >= topSide && ypos <= bottomSide)
       {
         state = i + 1;
-        // Serial.println(p.z);
       }
     }
   }
