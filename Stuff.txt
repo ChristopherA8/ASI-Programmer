@@ -40,3 +40,7 @@ Serial.println(str);
     snprintf(str, 128, "Button %d state is %s", i, state);
     Serial.println(str);
   }
+
+
+// Draw pixel
+tft.drawPixel(xpos, ypos, HX8357_BLACK);

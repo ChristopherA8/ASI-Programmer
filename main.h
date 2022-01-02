@@ -47,7 +47,10 @@ typedef struct NumPad
 
 NumPad numbers = {0};
 
-// No touch is 0
+// Button state (0 = No Button Pressed, 1 = Button One Pressed, 2 = Button Two Pressed...)
 static int state = 0;
 
+static boolean aButtonIsPressed = false;
+
+void mapTouchWithRotation(TSPoint point);
 void checkButtonState(int state);
