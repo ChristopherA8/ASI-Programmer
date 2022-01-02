@@ -7,8 +7,13 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 // Runs once on reset
 void setup()
 {
-  Serial.begin(9600);
-  Serial.setTimeout(50);
+  pinMode(3, OUTPUT);
+  digitalWrite(3, HIGH);
+  delay(1000);
+  digitalWrite(3, LOW);
+
+  // Serial.begin(9600);
+  // Serial.setTimeout(50);
 
   tft.begin();
   tft.setRotation(2);
@@ -256,12 +261,9 @@ void loop()
 
   if (p.z > ts.pressureThreshhold)
   {
-    Serial.println(p.z);
+    // Serial.println(p.z);
 
     // tft.drawPixel(xpos, ypos, HX8357_BLACK);
-
-    // If no button is pressed it will show 0 on the next loop around
-    // state = 0;
 
     for (int i = 0; i < numbers.buttonCount; i++)
     {
@@ -285,16 +287,17 @@ void checkButtonState(int state)
 {
   switch (state)
   {
-  // No buttons are being touched
   case 0:
+    digitalWrite(3, LOW);
     for (int i = 0; i < numbers.buttonCount; i++)
     {
       // On button release
       if (numbers.buttons[i].state == Pressed)
       {
-        char str[128];
-        snprintf(str, 128, "Button %d Unpressed", i + 1);
-        Serial.println(str);
+        // Button released
+        digitalWrite(3, HIGH);
+        delay(300);
+        digitalWrite(3, LOW);
       }
 
       // Reset button states
@@ -304,70 +307,75 @@ void checkButtonState(int state)
   case 1:
     if (numbers.buttons[0].state == Unpressed)
     {
-      Serial.println("Button 1 Pressed");
+      digitalWrite(3, HIGH);
       numbers.buttons[0].state = Pressed;
+      int width = numbers.buttons[0].width;
+      int height = numbers.buttons[0].height;
+      int leftSide = numbers.buttons[0].anchor[0];
+      int topSide = numbers.buttons[0].anchor[1];
+      tft.drawRect(leftSide + 1, topSide - 1, width - 1, height - 1, HX8357_BLACK);
     }
     break;
   case 2:
     if (numbers.buttons[1].state == Unpressed)
     {
-      Serial.println("Button 2 Pressed");
+
       numbers.buttons[1].state = Pressed;
     }
     break;
   case 3:
     if (numbers.buttons[2].state == Unpressed)
     {
-      Serial.println("Button 3 Pressed");
+
       numbers.buttons[2].state = Pressed;
     }
     break;
   case 4:
     if (numbers.buttons[3].state == Unpressed)
     {
-      Serial.println("Button 4 Pressed");
+
       numbers.buttons[3].state = Pressed;
     }
     break;
   case 5:
     if (numbers.buttons[4].state == Unpressed)
     {
-      Serial.println("Button 5 Pressed");
+
       numbers.buttons[4].state = Pressed;
     }
     break;
   case 6:
     if (numbers.buttons[5].state == Unpressed)
     {
-      Serial.println("Button 6 Pressed");
+
       numbers.buttons[5].state = Pressed;
     }
     break;
   case 7:
     if (numbers.buttons[6].state == Unpressed)
     {
-      Serial.println("Button 7 Pressed");
+
       numbers.buttons[6].state = Pressed;
     }
     break;
   case 8:
     if (numbers.buttons[7].state == Unpressed)
     {
-      Serial.println("Button 8 Pressed");
+
       numbers.buttons[7].state = Pressed;
     }
     break;
   case 9:
     if (numbers.buttons[8].state == Unpressed)
     {
-      Serial.println("Button 9 Pressed");
+
       numbers.buttons[8].state = Pressed;
     }
     break;
   case 10:
     if (numbers.buttons[9].state == Unpressed)
     {
-      Serial.println("Button 10 Pressed");
+
       numbers.buttons[9].state = Pressed;
     }
     break;
