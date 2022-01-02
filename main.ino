@@ -322,7 +322,7 @@ void checkButtonState(int state)
         tft.drawLine(topLeftX + 1, topLeftY + 1, topRightX - 1, topRightY + 1, HX8357_WHITE);                          // topLeft -> topRight
         tft.drawLine(topLeftX + 1, topLeftY + 1, bottomLeftX + 1, bottomLeftY - 1, HX8357_WHITE);                      // topLeft -> bottomLeft
         tft.drawLine(bottomLeftX + 1, bottomLeftY - 1, (bottomLeftX + width) - 1, bottomLeftY - 1, HX8357_WHITE);      // bottomLeft -> bottomRight
-        tft.drawLine(topRightX - 1, topRightY + 1, (bottomLeftX + width) - 1, (topRightY + height) - 1, HX8357_BLACK); // topRight -> bottomRight
+        tft.drawLine(topRightX - 1, topRightY + 1, (bottomLeftX + width) - 1, (topRightY + height) - 1, HX8357_WHITE); // topRight -> bottomRight
 
         digitalWrite(3, LOW);
       }
@@ -417,8 +417,8 @@ void buttonDepress(int button)
   int topRightY = topLeftY;
   int bottomLeftX = topLeftX;
   int bottomLeftY = topLeftY + height;
-  tft.drawLine(topLeftX + 1, topLeftY + 1, topRightX - 1, topRightY + 1, HX8357_BLACK);                          // topLeft -> topRight
-  tft.drawLine(topLeftX + 1, topLeftY + 1, bottomLeftX + 1, bottomLeftY - 1, HX8357_BLACK);                      // topLeft -> bottomLeft
-  tft.drawLine(bottomLeftX + 1, bottomLeftY - 1, (bottomLeftX + width) - 1, bottomLeftY - 1, HX8357_BLACK);      // bottomLeft -> bottomRight
-  tft.drawLine(topRightX - 1, topRightY + 1, (bottomLeftX + width) - 1, (topRightY + height) - 1, HX8357_BLACK); // topRight -> bottomRight
+  tft.drawLine(topLeftX + 1, topLeftY + 1, topRightX - 1, topRightY + 1, HX8357_RED);                          // topLeft -> topRight
+  tft.drawLine(topLeftX + 1, topLeftY + 1, bottomLeftX + 1, bottomLeftY - 1, HX8357_RED);                      // topLeft -> bottomLeft
+  tft.drawLine(bottomLeftX + 1, bottomLeftY - 1, (bottomLeftX + width) - 1, bottomLeftY - 1, HX8357_RED);      // bottomLeft -> bottomRight
+  tft.drawLine(topRightX - 1, topRightY + 1, (bottomLeftX + width) - 1, (topRightY + height) - 1, HX8357_RED); // topRight -> bottomRight
 }
