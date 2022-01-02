@@ -8,7 +8,6 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 void setup()
 {
   state = 0;
-  aButtonIsPressed = 0;
 
   pinMode(3, OUTPUT);
   digitalWrite(3, HIGH);
@@ -241,20 +240,8 @@ void loop()
 
   if (p.z == 0)
   {
-    for (int i = 0; i < numbers.buttonCount; i++)
-    {
-      // On button release
-      if (numbers.buttons[i].state == Pressed)
-      {
-        // Button released
-        digitalWrite(3, LOW);
-        delay(300);
-      }
-
-      // Reset button states
-      numbers.buttons[i].state = Unpressed;
-    }
     state = 0;
+    checkButtonState(state);
     return;
   }
 
@@ -263,32 +250,30 @@ void loop()
     tft.setCursor(0, 0);
     tft.fillRect(0, 0, 100, 100, HX8357_WHITE);
     tft.println(p.z);
+
+    tft.setCursor(0, 100);
+    tft.fillRect(0, 100, 200, 100, HX8357_WHITE);
+    char str[128];
+    snprintf(str, 128, "%d, %d", xpos, ypos);
+    tft.println(str);
     delay(100);
 
     for (int i = 0; i < numbers.buttonCount; i++)
     {
       int width = numbers.buttons[i].width;
       int height = numbers.buttons[i].height;
-      int leftSide = numbers.buttons[i].anchor[0];
-      int topSide = numbers.buttons[i].anchor[1];
-      int rightSide = leftSide + width;
-      int bottomSide = topSide + height;
+      int topLeftX = numbers.buttons[i].anchor[0];
+      int topLeftY = numbers.buttons[i].anchor[1];
+      int rightSide = topLeftX + width;
+      int bottomSide = topLeftY + height;
 
       // If touch is within button bounds
-      if (xpos >= leftSide && xpos <= rightSide && ypos >= topSide && ypos <= bottomSide)
+      if (xpos >= topLeftX && xpos <= rightSide && ypos >= topLeftY && ypos <= bottomSide)
       {
         state = i + 1;
         checkButtonState(state);
-        aButtonIsPressed = true;
       }
     }
-
-    // Set state to 0 if we're pressing on the screen just not on a button
-    // if (!aButtonIsPressed)
-    // {
-    //   state = 0;
-    //   // checkButtonState(state);
-    // }
   }
 }
 
@@ -319,97 +304,121 @@ void checkButtonState(int state)
 {
   switch (state)
   {
-  // case 0:
-  //   for (int i = 0; i < numbers.buttonCount; i++)
-  //   {
-  //     // On button release
-  //     if (numbers.buttons[i].state == Pressed)
-  //     {
-  //       // Button released
-  //       digitalWrite(3, LOW);
-  //       delay(300);
-  //     }
+  case 0:
+    for (int i = 0; i < numbers.buttonCount; i++)
+    {
+      // On button release
+      if (numbers.buttons[i].state == Pressed)
+      {
+        // Button released
+        int width = numbers.buttons[i].width;
+        int height = numbers.buttons[i].height;
+        int topLeftX = numbers.buttons[i].anchor[0];
+        int topLeftY = numbers.buttons[i].anchor[1];
+        int topRightX = topLeftX + width;
+        int topRightY = topLeftY;
+        int bottomLeftX = topLeftX;
+        int bottomLeftY = topLeftY + height;
+        tft.drawLine(topLeftX + 1, topLeftY + 1, topRightX - 1, topRightY + 1, HX8357_WHITE);                          // topLeft -> topRight
+        tft.drawLine(topLeftX + 1, topLeftY + 1, bottomLeftX + 1, bottomLeftY - 1, HX8357_WHITE);                      // topLeft -> bottomLeft
+        tft.drawLine(bottomLeftX + 1, bottomLeftY - 1, (bottomLeftX + width) - 1, bottomLeftY - 1, HX8357_WHITE);      // bottomLeft -> bottomRight
+        tft.drawLine(topRightX - 1, topRightY + 1, (bottomLeftX + width) - 1, (topRightY + height) - 1, HX8357_BLACK); // topRight -> bottomRight
 
-  //     // Reset button states
-  //     numbers.buttons[i].state = Unpressed;
-  //   }
-  //   break;
+        digitalWrite(3, LOW);
+      }
+
+      // Reset button states
+      numbers.buttons[i].state = Unpressed;
+    }
+    break;
   case 1:
     if (numbers.buttons[0].state == Unpressed)
     {
       digitalWrite(3, HIGH);
+      buttonDepress(0);
       numbers.buttons[0].state = Pressed;
-      int width = numbers.buttons[0].width;
-      int height = numbers.buttons[0].height;
-      int leftSide = numbers.buttons[0].anchor[0];
-      int topSide = numbers.buttons[0].anchor[1];
-      tft.drawRect(leftSide + 1, topSide - 1, width - 1, height - 1, HX8357_BLACK);
     }
     break;
   case 2:
     if (numbers.buttons[1].state == Unpressed)
     {
-
+      buttonDepress(1);
       numbers.buttons[1].state = Pressed;
     }
     break;
   case 3:
     if (numbers.buttons[2].state == Unpressed)
     {
-
+      buttonDepress(2);
       numbers.buttons[2].state = Pressed;
     }
     break;
   case 4:
     if (numbers.buttons[3].state == Unpressed)
     {
-
+      buttonDepress(3);
       numbers.buttons[3].state = Pressed;
     }
     break;
   case 5:
     if (numbers.buttons[4].state == Unpressed)
     {
-
+      buttonDepress(4);
       numbers.buttons[4].state = Pressed;
     }
     break;
   case 6:
     if (numbers.buttons[5].state == Unpressed)
     {
-
+      buttonDepress(5);
       numbers.buttons[5].state = Pressed;
     }
     break;
   case 7:
     if (numbers.buttons[6].state == Unpressed)
     {
-
+      buttonDepress(6);
       numbers.buttons[6].state = Pressed;
     }
     break;
   case 8:
     if (numbers.buttons[7].state == Unpressed)
     {
-
+      buttonDepress(7);
       numbers.buttons[7].state = Pressed;
     }
     break;
   case 9:
     if (numbers.buttons[8].state == Unpressed)
     {
-
+      buttonDepress(8);
       numbers.buttons[8].state = Pressed;
     }
     break;
   case 10:
     if (numbers.buttons[9].state == Unpressed)
     {
-
+      buttonDepress(9);
       numbers.buttons[9].state = Pressed;
     }
     break;
   default:
     break;
   }
+}
+
+void buttonDepress(int button)
+{
+  int width = numbers.buttons[button].width;
+  int height = numbers.buttons[button].height;
+  int topLeftX = numbers.buttons[button].anchor[0];
+  int topLeftY = numbers.buttons[button].anchor[1];
+  int topRightX = topLeftX + width;
+  int topRightY = topLeftY;
+  int bottomLeftX = topLeftX;
+  int bottomLeftY = topLeftY + height;
+  tft.drawLine(topLeftX + 1, topLeftY + 1, topRightX - 1, topRightY + 1, HX8357_BLACK);                          // topLeft -> topRight
+  tft.drawLine(topLeftX + 1, topLeftY + 1, bottomLeftX + 1, bottomLeftY - 1, HX8357_BLACK);                      // topLeft -> bottomLeft
+  tft.drawLine(bottomLeftX + 1, bottomLeftY - 1, (bottomLeftX + width) - 1, bottomLeftY - 1, HX8357_BLACK);      // bottomLeft -> bottomRight
+  tft.drawLine(topRightX - 1, topRightY + 1, (bottomLeftX + width) - 1, (topRightY + height) - 1, HX8357_BLACK); // topRight -> bottomRight
 }
