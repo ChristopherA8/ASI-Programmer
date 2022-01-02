@@ -7,6 +7,9 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 // Runs once on reset
 void setup()
 {
+  state = 0;
+  aButtonIsPressed = 0;
+
   pinMode(3, OUTPUT);
   digitalWrite(3, HIGH);
   delay(1000);
@@ -234,6 +237,63 @@ void loop()
 {
 
   TSPoint p = ts.getPoint();
+  mapTouchWithRotation(p);
+
+  if (p.z == 0)
+  {
+    for (int i = 0; i < numbers.buttonCount; i++)
+    {
+      // On button release
+      if (numbers.buttons[i].state == Pressed)
+      {
+        // Button released
+        digitalWrite(3, LOW);
+        delay(300);
+      }
+
+      // Reset button states
+      numbers.buttons[i].state = Unpressed;
+    }
+    state = 0;
+    return;
+  }
+
+  if (p.z > ts.pressureThreshhold)
+  {
+    tft.setCursor(0, 0);
+    tft.fillRect(0, 0, 100, 100, HX8357_WHITE);
+    tft.println(p.z);
+    delay(100);
+
+    for (int i = 0; i < numbers.buttonCount; i++)
+    {
+      int width = numbers.buttons[i].width;
+      int height = numbers.buttons[i].height;
+      int leftSide = numbers.buttons[i].anchor[0];
+      int topSide = numbers.buttons[i].anchor[1];
+      int rightSide = leftSide + width;
+      int bottomSide = topSide + height;
+
+      // If touch is within button bounds
+      if (xpos >= leftSide && xpos <= rightSide && ypos >= topSide && ypos <= bottomSide)
+      {
+        state = i + 1;
+        checkButtonState(state);
+        aButtonIsPressed = true;
+      }
+    }
+
+    // Set state to 0 if we're pressing on the screen just not on a button
+    // if (!aButtonIsPressed)
+    // {
+    //   state = 0;
+    //   // checkButtonState(state);
+    // }
+  }
+}
+
+void mapTouchWithRotation(TSPoint p)
+{
   switch (tft.getRotation())
   {
   case 0:
@@ -253,57 +313,27 @@ void loop()
     ypos = map(p.x, TS_LEFT, TS_RT, 0, tft.height());
     break;
   }
-
-  checkButtonState(state);
-
-  // Reset button state
-  state = 0;
-
-  if (p.z > ts.pressureThreshhold)
-  {
-    // Serial.println(p.z);
-
-    // tft.drawPixel(xpos, ypos, HX8357_BLACK);
-
-    for (int i = 0; i < numbers.buttonCount; i++)
-    {
-      int width = numbers.buttons[i].width;
-      int height = numbers.buttons[i].height;
-      int leftSide = numbers.buttons[i].anchor[0];
-      int topSide = numbers.buttons[i].anchor[1];
-      int rightSide = leftSide + width;
-      int bottomSide = topSide + height;
-
-      // If touch is within button bounds
-      if (xpos >= leftSide && xpos <= rightSide && ypos >= topSide && ypos <= bottomSide)
-      {
-        state = i + 1;
-      }
-    }
-  }
 }
 
 void checkButtonState(int state)
 {
   switch (state)
   {
-  case 0:
-    digitalWrite(3, LOW);
-    for (int i = 0; i < numbers.buttonCount; i++)
-    {
-      // On button release
-      if (numbers.buttons[i].state == Pressed)
-      {
-        // Button released
-        digitalWrite(3, HIGH);
-        delay(300);
-        digitalWrite(3, LOW);
-      }
+  // case 0:
+  //   for (int i = 0; i < numbers.buttonCount; i++)
+  //   {
+  //     // On button release
+  //     if (numbers.buttons[i].state == Pressed)
+  //     {
+  //       // Button released
+  //       digitalWrite(3, LOW);
+  //       delay(300);
+  //     }
 
-      // Reset button states
-      numbers.buttons[i].state = Unpressed;
-    }
-    break;
+  //     // Reset button states
+  //     numbers.buttons[i].state = Unpressed;
+  //   }
+  //   break;
   case 1:
     if (numbers.buttons[0].state == Unpressed)
     {
