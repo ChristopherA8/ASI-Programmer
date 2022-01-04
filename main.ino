@@ -38,14 +38,14 @@ void setup()
   tft.drawLine(inputBox.anchor[0], inputBox.anchor[1], inputBox.anchor[0] + inputBox.width, inputBox.anchor[1], HX8357_BLACK);
   tft.drawLine(inputBox.anchor[0], inputBox.anchor[1], inputBox.anchor[0], inputBox.anchor[1] + inputBox.height, HX8357_BLACK);
   tft.drawLine(inputBox.anchor[0], inputBox.anchor[1] + inputBox.height, inputBox.anchor[0] + inputBox.width, inputBox.anchor[1] + inputBox.height, HX8357_BLACK);
-  tft.drawLine(inputBox.anchor[0] + inputBox.width, inputBox.anchor[1] + inputBox.height, inputBox.anchor[0] + inputBox.width, inputBox.anchor[1], HX8357_BLACK);
+  tft.drawLine(inputBox.anchor[0] + inputBox.width - 1, inputBox.anchor[1] + inputBox.height, inputBox.anchor[0] + inputBox.width - 1, inputBox.anchor[1], HX8357_BLACK);
 
   // Number One
   View numOne = {0};
   numOne.height = 50;
   numOne.width = width / 3;
   numOne.anchor[0] = 0;   // top left x-value
-  numOne.anchor[1] = 200; // top left y-value
+  numOne.anchor[1] = 180; // top left y-value
 
   // Add it to the numpad
   numbers.buttons[0] = numOne;
@@ -65,7 +65,7 @@ void setup()
   numTwo.height = 50;
   numTwo.width = width / 3;
   numTwo.anchor[0] = width / 3; // top left x-value
-  numTwo.anchor[1] = 200;       // top left y-value
+  numTwo.anchor[1] = 180;       // top left y-value
 
   numbers.buttons[1] = numTwo;
 
@@ -84,7 +84,7 @@ void setup()
   numThree.height = 50;
   numThree.width = width / 3;
   numThree.anchor[0] = (width / 3) * 2; // top left x-value
-  numThree.anchor[1] = 200;             // top left y-value
+  numThree.anchor[1] = 180;             // top left y-value
 
   numbers.buttons[2] = numThree;
 
@@ -103,7 +103,7 @@ void setup()
   numFour.height = 50;
   numFour.width = width / 3;
   numFour.anchor[0] = 0;   // top left x-value
-  numFour.anchor[1] = 280; // top left y-value
+  numFour.anchor[1] = 260; // top left y-value
 
   numbers.buttons[3] = numFour;
 
@@ -122,7 +122,7 @@ void setup()
   numFive.height = 50;
   numFive.width = width / 3;
   numFive.anchor[0] = width / 3; // top left x-value
-  numFive.anchor[1] = 280;       // top left y-value
+  numFive.anchor[1] = 260;       // top left y-value
 
   numbers.buttons[4] = numFive;
 
@@ -141,7 +141,7 @@ void setup()
   numSix.height = 50;
   numSix.width = width / 3;
   numSix.anchor[0] = (width / 3) * 2; // top left x-value
-  numSix.anchor[1] = 280;             // top left y-value
+  numSix.anchor[1] = 260;             // top left y-value
 
   numbers.buttons[5] = numSix;
 
@@ -160,7 +160,7 @@ void setup()
   numSeven.height = 50;
   numSeven.width = width / 3;
   numSeven.anchor[0] = 0;   // top left x-value
-  numSeven.anchor[1] = 360; // top left y-value
+  numSeven.anchor[1] = 340; // top left y-value
 
   numbers.buttons[6] = numSeven;
 
@@ -179,7 +179,7 @@ void setup()
   numEight.height = 50;
   numEight.width = width / 3;
   numEight.anchor[0] = width / 3; // top left x-value
-  numEight.anchor[1] = 360;       // top left y-value
+  numEight.anchor[1] = 340;       // top left y-value
 
   numbers.buttons[7] = numEight;
 
@@ -198,7 +198,7 @@ void setup()
   numNine.height = 50;
   numNine.width = width / 3;
   numNine.anchor[0] = (width / 3) * 2; // top left x-value
-  numNine.anchor[1] = 360;             // top left y-value
+  numNine.anchor[1] = 340;             // top left y-value
 
   numbers.buttons[8] = numNine;
 
@@ -217,7 +217,7 @@ void setup()
   numZero.height = 50;
   numZero.width = width / 3;
   numZero.anchor[0] = width / 3; // top left x-value
-  numZero.anchor[1] = 440;       // top left y-value
+  numZero.anchor[1] = 420;       // top left y-value
 
   numbers.buttons[9] = numZero;
 
@@ -413,7 +413,7 @@ void buttonDepress(int button)
   tft.drawLine(bottomLeftX + 1, bottomLeftY - 1, (bottomLeftX + width) - 1, bottomLeftY - 1, HX8357_RED);      // bottomLeft -> bottomRight
   tft.drawLine(topRightX - 1, topRightY + 1, (bottomLeftX + width) - 1, (topRightY + height) - 1, HX8357_RED); // topRight -> bottomRight
 
-  tft.fillRect(50, 100, 100, 100, HX8357_WHITE);
+  tft.fillRect(1, 51, tft.width() - 2, 98, HX8357_WHITE);
   tft.setCursor(50, 100);
   tft.print(button + 1);
 }
