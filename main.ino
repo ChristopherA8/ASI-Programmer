@@ -14,8 +14,7 @@ void setup()
   delay(1000);
   digitalWrite(3, LOW);
 
-  // Serial.begin(9600);
-  // Serial.setTimeout(50);
+  Serial.begin(9600);
 
   tft.begin();
   tft.setRotation(2);
@@ -413,7 +412,15 @@ void buttonDepress(int button)
   tft.drawLine(bottomLeftX + 1, bottomLeftY - 1, (bottomLeftX + width) - 1, bottomLeftY - 1, HX8357_RED);      // bottomLeft -> bottomRight
   tft.drawLine(topRightX - 1, topRightY + 1, (bottomLeftX + width) - 1, (topRightY + height) - 1, HX8357_RED); // topRight -> bottomRight
 
+  int buttonName = button + 1;
+  if (buttonName == 10)
+    buttonName = 0;
+
   tft.fillRect(1, 51, tft.width() - 2, 98, HX8357_WHITE);
   tft.setCursor(50, 100);
-  tft.print(button + 1);
+  tft.print(buttonName);
+
+  char str[128];
+  snprintf(str, 128, "Button %d Pressed", buttonName);
+  Serial.println(str);
 }
