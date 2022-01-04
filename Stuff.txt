@@ -44,3 +44,17 @@ Serial.println(str);
 
 // Draw pixel
 tft.drawPixel(xpos, ypos, HX8357_BLACK);
+
+// Print x,y and pressure
+  /*   if (p.z > ts.pressureThreshhold)
+  {
+    tft.setCursor(0, 0);
+    tft.fillRect(0, 0, 100, 100, HX8357_WHITE);
+    tft.println(p.z);
+
+    tft.setCursor(0, 100);
+    tft.fillRect(0, 100, 200, 100, HX8357_WHITE);
+    char str[128];
+    snprintf(str, 128, "%d, %d", xpos, ypos);
+    tft.println(str);
+  } */

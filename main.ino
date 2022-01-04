@@ -230,6 +230,9 @@ void setup()
   tft.setTextColor(HX8357_BLACK);
   tft.setTextSize(3);
   tft.println("0");
+
+  tft.setCursor(50, 100);
+  tft.print("0");
 }
 
 void loop()
@@ -238,43 +241,34 @@ void loop()
   TSPoint p = ts.getPoint();
   mapTouchWithRotation(p);
 
-  if (p.z == 0)
+  for (int i = 0; i < numbers.buttonCount; i++)
   {
-    state = 0;
-    checkButtonState(state);
-    return;
-  }
+    int width = numbers.buttons[i].width;
+    int height = numbers.buttons[i].height;
+    int topLeftX = numbers.buttons[i].anchor[0];
+    int topLeftY = numbers.buttons[i].anchor[1];
+    int rightSide = topLeftX + width;
+    int bottomSide = topLeftY + height;
 
-  if (p.z > ts.pressureThreshhold)
-  {
-    tft.setCursor(0, 0);
-    tft.fillRect(0, 0, 100, 100, HX8357_WHITE);
-    tft.println(p.z);
-
-    tft.setCursor(0, 100);
-    tft.fillRect(0, 100, 200, 100, HX8357_WHITE);
-    char str[128];
-    snprintf(str, 128, "%d, %d", xpos, ypos);
-    tft.println(str);
-    delay(100);
-
-    for (int i = 0; i < numbers.buttonCount; i++)
+    // If touch is within button bounds
+    if (xpos >= topLeftX && xpos <= rightSide && ypos >= topLeftY && ypos <= bottomSide)
     {
-      int width = numbers.buttons[i].width;
-      int height = numbers.buttons[i].height;
-      int topLeftX = numbers.buttons[i].anchor[0];
-      int topLeftY = numbers.buttons[i].anchor[1];
-      int rightSide = topLeftX + width;
-      int bottomSide = topLeftY + height;
-
-      // If touch is within button bounds
-      if (xpos >= topLeftX && xpos <= rightSide && ypos >= topLeftY && ypos <= bottomSide)
-      {
-        state = i + 1;
-        checkButtonState(state);
-      }
+      state = i + 1;
+      aButtonIsPressed = true;
     }
   }
+
+  if (!aButtonIsPressed)
+  {
+    state = 0;
+  }
+  else
+  {
+    aButtonIsPressed = false;
+  }
+
+  // Button State Machine
+  checkButtonState(state);
 }
 
 void mapTouchWithRotation(TSPoint p)
@@ -323,8 +317,6 @@ void checkButtonState(int state)
         tft.drawLine(topLeftX + 1, topLeftY + 1, bottomLeftX + 1, bottomLeftY - 1, HX8357_WHITE);                      // topLeft -> bottomLeft
         tft.drawLine(bottomLeftX + 1, bottomLeftY - 1, (bottomLeftX + width) - 1, bottomLeftY - 1, HX8357_WHITE);      // bottomLeft -> bottomRight
         tft.drawLine(topRightX - 1, topRightY + 1, (bottomLeftX + width) - 1, (topRightY + height) - 1, HX8357_WHITE); // topRight -> bottomRight
-
-        digitalWrite(3, LOW);
       }
 
       // Reset button states
@@ -334,7 +326,6 @@ void checkButtonState(int state)
   case 1:
     if (numbers.buttons[0].state == Unpressed)
     {
-      digitalWrite(3, HIGH);
       buttonDepress(0);
       numbers.buttons[0].state = Pressed;
     }
@@ -421,4 +412,8 @@ void buttonDepress(int button)
   tft.drawLine(topLeftX + 1, topLeftY + 1, bottomLeftX + 1, bottomLeftY - 1, HX8357_RED);                      // topLeft -> bottomLeft
   tft.drawLine(bottomLeftX + 1, bottomLeftY - 1, (bottomLeftX + width) - 1, bottomLeftY - 1, HX8357_RED);      // bottomLeft -> bottomRight
   tft.drawLine(topRightX - 1, topRightY + 1, (bottomLeftX + width) - 1, (topRightY + height) - 1, HX8357_RED); // topRight -> bottomRight
+
+  tft.fillRect(50, 100, 100, 100, HX8357_WHITE);
+  tft.setCursor(50, 100);
+  tft.print(button + 1);
 }
