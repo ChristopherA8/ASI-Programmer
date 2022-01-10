@@ -44,11 +44,12 @@ typedef struct NumPad
 {
   View buttons[12];
   int buttonCount;
-  int number; // 0-30
-  int mode;   // a/b/O
+  int number;       // 0-30
+  const char *mode; // a/b/O
 } numpad;
 
 static NumPad numbers = {0};
+static View inputBox = {0};
 
 // Button state (0 = No Button Pressed, 1 = Button One Pressed, 2 = Button Two Pressed...)
 static int state = 0;
@@ -61,3 +62,14 @@ void mapTouchWithRotation(TSPoint point);
 void checkButtonState(int state);
 
 void buttonDepress(int button);
+unsigned changeNumber(unsigned number);
+void changeMode(const char *mode);
+
+// Number helpers
+int getNumberLength(int x);
+unsigned concatenate(unsigned x, unsigned y);
+
+// Graphics Helpers
+void clearInputbox();
+void clearInputNumbers();
+void clearInputMode();

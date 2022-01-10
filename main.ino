@@ -24,10 +24,10 @@ void setup()
   int16_t height = tft.height();
   int16_t width = tft.width();
 
+  // Button count is just for numbers (for now)
   numbers.buttonCount = 10; // it will be 12 when I add "a" and "b"
 
   // Input box
-  View inputBox = {0};
   inputBox.height = 100;
   inputBox.width = width;
   inputBox.anchor[0] = 0;  // top left x-value
@@ -230,7 +230,28 @@ void setup()
   tft.setTextSize(3);
   tft.println("0");
 
-  tft.setCursor(50, 100);
+  // Mode button
+  View modeButton = {0};
+  modeButton.height = 50;
+  modeButton.width = width / 3;
+  modeButton.anchor[0] = 0;   // top left x-value
+  modeButton.anchor[1] = 420; // top left y-value
+
+  numbers.buttons[10] = modeButton;
+
+  // Draw modeButton
+  tft.drawLine(modeButton.anchor[0], modeButton.anchor[1], modeButton.anchor[0] + modeButton.width, modeButton.anchor[1], HX8357_BLACK);
+  tft.drawLine(modeButton.anchor[0], modeButton.anchor[1], modeButton.anchor[0], modeButton.anchor[1] + modeButton.height, HX8357_BLACK);
+  tft.drawLine(modeButton.anchor[0], modeButton.anchor[1] + modeButton.height, modeButton.anchor[0] + modeButton.width, modeButton.anchor[1] + modeButton.height, HX8357_BLACK);
+  tft.drawLine(modeButton.anchor[0] + modeButton.width, modeButton.anchor[1] + modeButton.height, modeButton.anchor[0] + modeButton.width, modeButton.anchor[1], HX8357_BLACK);
+  tft.setCursor(modeButton.anchor[0] + (modeButton.width / 4), modeButton.anchor[1] + (modeButton.height / 2));
+  tft.setTextColor(HX8357_BLACK);
+  tft.setTextSize(2);
+  tft.println("a/b/O");
+  changeMode("O");
+
+  tft.setTextSize(3);
+  tft.setCursor(25, 100);
   tft.print("0");
 }
 
@@ -242,6 +263,7 @@ void loop()
 
   if (p.z > MIN_PRESSURE && p.z < MAX_PRESSURE)
   {
+    // Number buttons
     for (int i = 0; i < numbers.buttonCount; i++)
     {
       int width = numbers.buttons[i].width;
@@ -259,6 +281,21 @@ void loop()
       }
     }
 
+    // Other Buttons
+    int width = numbers.buttons[10].width;
+    int height = numbers.buttons[10].height;
+    int topLeftX = numbers.buttons[10].anchor[0];
+    int topLeftY = numbers.buttons[10].anchor[1];
+    int rightSide = topLeftX + width;
+    int bottomSide = topLeftY + height;
+
+    // If touch is within button bounds
+    if (xpos >= topLeftX && xpos <= rightSide && ypos >= topLeftY && ypos <= bottomSide)
+    {
+      state = 11;
+      aButtonIsPressed = true;
+    }
+
     if (!aButtonIsPressed)
     {
       state = 0;
@@ -267,6 +304,10 @@ void loop()
     {
       aButtonIsPressed = false;
     }
+  }
+  else
+  {
+    state = 0;
   }
 
   // Button State Machine
@@ -301,7 +342,7 @@ void checkButtonState(int state)
   switch (state)
   {
   case 0:
-    for (int i = 0; i < numbers.buttonCount; i++)
+    for (int i = 0; i < numbers.buttonCount + 1; i++)
     {
       // On button release
       if (numbers.buttons[i].state == Pressed)
@@ -394,6 +435,13 @@ void checkButtonState(int state)
       pressButton(9);
       numbers.buttons[9].state = Pressed;
     }
+  case 11: // a/b/O button
+    if (numbers.buttons[10].state == Unpressed)
+    {
+      // pressButton(10);
+      changeMode(numbers.mode);
+      numbers.buttons[10].state = Pressed;
+    }
     break;
   default:
     break;
@@ -419,11 +467,97 @@ void pressButton(int button)
   if (buttonName == 10)
     buttonName = 0;
 
-  tft.fillRect(1, 51, tft.width() - 2, 98, HX8357_WHITE);
-  tft.setCursor(50, 100);
-  tft.print(buttonName);
+  clearInputNumbers();
+  tft.setCursor(25, 100);
+  changeNumber(buttonName);
+  tft.print(numbers.number);
 
   char str[128];
   snprintf(str, 128, "Button %d Pressed", buttonName);
   Serial.println(str);
+}
+
+void changeMode(const char *mode)
+{
+  if (mode == "a")
+  {
+    numbers.mode = "b";
+  }
+  else if (mode == "b")
+  {
+    numbers.mode = "O";
+  }
+  else if (mode == "O")
+  {
+    numbers.mode = "a";
+  }
+  else
+  {
+    numbers.mode = mode;
+  }
+
+  tft.setTextSize(2);
+  clearInputMode();
+  tft.setCursor(61, 100);
+  tft.print(numbers.mode);
+  tft.setTextSize(3);
+}
+
+unsigned changeNumber(unsigned number)
+{
+  if (getNumberLength(numbers.number) >= 2 || numbers.number == 0)
+  {
+    if (number <= 3)
+    {
+      numbers.number = number;
+      return numbers.number;
+    }
+    else
+    {
+      numbers.number = 0;
+      return numbers.number;
+    }
+  }
+  else
+  {
+    if (numbers.number == 3 && number != 0)
+    {
+      numbers.number = 0;
+      return numbers.number;
+    }
+
+    numbers.number = concatenate(numbers.number, number);
+    return numbers.number;
+  }
+}
+
+int getNumberLength(int x)
+{
+  return floor(log10(abs(x))) + 1;
+}
+
+unsigned concatenate(unsigned x, unsigned y)
+{
+  unsigned pow = 10;
+  while (y >= pow)
+    pow *= 10;
+  return x * pow + y;
+}
+
+void clearInputbox()
+{
+  tft.fillRect(inputBox.anchor[0] + 1, inputBox.anchor[1] + 1, inputBox.width - 2, inputBox.height - 2, HX8357_WHITE);
+}
+
+// white sqaure x values
+// 0 - 60
+void clearInputNumbers()
+{
+  tft.fillRect(inputBox.anchor[0] + 1, inputBox.anchor[1] + 1, 60 - 1, inputBox.height - 2, HX8357_WHITE);
+}
+
+// 61 - inputBox.width
+void clearInputMode()
+{
+  tft.fillRect(61, inputBox.anchor[1] + 1, (inputBox.width - 1) - 61, inputBox.height - 1, HX8357_WHITE);
 }
