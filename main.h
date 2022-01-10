@@ -9,7 +9,8 @@
 #define TFT_CS 10
 #define TFT_DC 9
 #define TFT_RST 8
-#define PRESSURE_THRESHOLD 1200
+#define MIN_PRESSURE 10
+#define MAX_PRESSURE 1000
 
 // Pins for touch screen
 #define YP A2
@@ -18,10 +19,10 @@
 #define XP 12
 
 // Touch screen boundaries
-#define TS_LEFT 150
-#define TS_RT 840
-#define TS_TOP 120
-#define TS_BOT 900
+#define TS_MINX 150
+#define TS_MAXX 840
+#define TS_MINY 120
+#define TS_MAXY 900
 
 enum ButtonState
 {
@@ -43,6 +44,8 @@ typedef struct NumPad
 {
   View buttons[12];
   int buttonCount;
+  int number; // 0-30
+  int mode;   // a/b/O
 } numpad;
 
 static NumPad numbers = {0};

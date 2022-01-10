@@ -240,30 +240,33 @@ void loop()
   TSPoint p = ts.getPoint();
   mapTouchWithRotation(p);
 
-  for (int i = 0; i < numbers.buttonCount; i++)
+  if (p.z > MIN_PRESSURE && p.z < MAX_PRESSURE)
   {
-    int width = numbers.buttons[i].width;
-    int height = numbers.buttons[i].height;
-    int topLeftX = numbers.buttons[i].anchor[0];
-    int topLeftY = numbers.buttons[i].anchor[1];
-    int rightSide = topLeftX + width;
-    int bottomSide = topLeftY + height;
-
-    // If touch is within button bounds
-    if (xpos >= topLeftX && xpos <= rightSide && ypos >= topLeftY && ypos <= bottomSide)
+    for (int i = 0; i < numbers.buttonCount; i++)
     {
-      state = i + 1;
-      aButtonIsPressed = true;
-    }
-  }
+      int width = numbers.buttons[i].width;
+      int height = numbers.buttons[i].height;
+      int topLeftX = numbers.buttons[i].anchor[0];
+      int topLeftY = numbers.buttons[i].anchor[1];
+      int rightSide = topLeftX + width;
+      int bottomSide = topLeftY + height;
 
-  if (!aButtonIsPressed)
-  {
-    state = 0;
-  }
-  else
-  {
-    aButtonIsPressed = false;
+      // If touch is within button bounds
+      if (xpos >= topLeftX && xpos <= rightSide && ypos >= topLeftY && ypos <= bottomSide)
+      {
+        state = i + 1;
+        aButtonIsPressed = true;
+      }
+    }
+
+    if (!aButtonIsPressed)
+    {
+      state = 0;
+    }
+    else
+    {
+      aButtonIsPressed = false;
+    }
   }
 
   // Button State Machine
@@ -275,20 +278,20 @@ void mapTouchWithRotation(TSPoint p)
   switch (tft.getRotation())
   {
   case 0:
-    xpos = map(p.x, TS_LEFT, TS_RT, 0, tft.width());
-    ypos = map(p.y, TS_TOP, TS_BOT, 0, tft.height());
+    xpos = map(p.x, TS_MINX, TS_MAXX, 0, tft.width());
+    ypos = map(p.y, TS_MINY, TS_MAXY, 0, tft.height());
     break;
   case 1:
-    xpos = map(p.y, TS_TOP, TS_BOT, 0, tft.width());
-    ypos = map(p.x, TS_RT, TS_LEFT, 0, tft.height());
+    xpos = map(p.y, TS_MINY, TS_MAXY, 0, tft.width());
+    ypos = map(p.x, TS_MAXX, TS_MINX, 0, tft.height());
     break;
   case 2:
-    xpos = map(p.x, TS_RT, TS_LEFT, 0, tft.width());
-    ypos = map(p.y, TS_BOT, TS_TOP, 0, tft.height());
+    xpos = map(p.x, TS_MAXX, TS_MINX, 0, tft.width());
+    ypos = map(p.y, TS_MAXY, TS_MINY, 0, tft.height());
     break;
   case 3:
-    xpos = map(p.y, TS_BOT, TS_TOP, 0, tft.width());
-    ypos = map(p.x, TS_LEFT, TS_RT, 0, tft.height());
+    xpos = map(p.y, TS_MAXY, TS_MINY, 0, tft.width());
+    ypos = map(p.x, TS_MINX, TS_MAXX, 0, tft.height());
     break;
   }
 }
@@ -325,70 +328,70 @@ void checkButtonState(int state)
   case 1:
     if (numbers.buttons[0].state == Unpressed)
     {
-      buttonDepress(0);
+      pressButton(0);
       numbers.buttons[0].state = Pressed;
     }
     break;
   case 2:
     if (numbers.buttons[1].state == Unpressed)
     {
-      buttonDepress(1);
+      pressButton(1);
       numbers.buttons[1].state = Pressed;
     }
     break;
   case 3:
     if (numbers.buttons[2].state == Unpressed)
     {
-      buttonDepress(2);
+      pressButton(2);
       numbers.buttons[2].state = Pressed;
     }
     break;
   case 4:
     if (numbers.buttons[3].state == Unpressed)
     {
-      buttonDepress(3);
+      pressButton(3);
       numbers.buttons[3].state = Pressed;
     }
     break;
   case 5:
     if (numbers.buttons[4].state == Unpressed)
     {
-      buttonDepress(4);
+      pressButton(4);
       numbers.buttons[4].state = Pressed;
     }
     break;
   case 6:
     if (numbers.buttons[5].state == Unpressed)
     {
-      buttonDepress(5);
+      pressButton(5);
       numbers.buttons[5].state = Pressed;
     }
     break;
   case 7:
     if (numbers.buttons[6].state == Unpressed)
     {
-      buttonDepress(6);
+      pressButton(6);
       numbers.buttons[6].state = Pressed;
     }
     break;
   case 8:
     if (numbers.buttons[7].state == Unpressed)
     {
-      buttonDepress(7);
+      pressButton(7);
       numbers.buttons[7].state = Pressed;
     }
     break;
   case 9:
     if (numbers.buttons[8].state == Unpressed)
     {
-      buttonDepress(8);
+      pressButton(8);
       numbers.buttons[8].state = Pressed;
     }
     break;
   case 10:
     if (numbers.buttons[9].state == Unpressed)
     {
-      buttonDepress(9);
+      pressButton(9);
       numbers.buttons[9].state = Pressed;
     }
     break;
@@ -397,7 +400,7 @@ void checkButtonState(int state)
   }
 }
 
-void buttonDepress(int button)
+void pressButton(int button)
 {
   int width = numbers.buttons[button].width;
   int height = numbers.buttons[button].height;
