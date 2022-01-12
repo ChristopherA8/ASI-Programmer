@@ -5,6 +5,13 @@
 #include "TouchScreen.h"
 #include "bitmaps.h"
 
+// Fonts
+#include <Fonts/FreeSans12pt7b.h>
+#define NUMPAD_TEXT_SIZE 1
+#define INPUT_BOX_TEXT_SIZE 2
+#define NUMPAD_PADDING_WIDTH -5
+#define NUMPAD_PADDING_HEIGHT 10
+
 // Pins for display
 #define TFT_CS 10
 #define TFT_DC 9

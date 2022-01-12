@@ -20,6 +20,7 @@ void setup()
   tft.setRotation(2);
 
   tft.fillScreen(HX8357_WHITE);
+  tft.setFont(&FreeSans12pt7b);
 
   int16_t height = tft.height();
   int16_t width = tft.width();
@@ -54,9 +55,9 @@ void setup()
   tft.drawLine(numOne.anchor[0], numOne.anchor[1], numOne.anchor[0], numOne.anchor[1] + numOne.height, HX8357_BLACK);
   tft.drawLine(numOne.anchor[0], numOne.anchor[1] + numOne.height, numOne.anchor[0] + numOne.width, numOne.anchor[1] + numOne.height, HX8357_BLACK);
   tft.drawLine(numOne.anchor[0] + numOne.width, numOne.anchor[1] + numOne.height, numOne.anchor[0] + numOne.width, numOne.anchor[1], HX8357_BLACK);
-  tft.setCursor(numOne.anchor[0] + (numOne.width / 2), numOne.anchor[1] + (numOne.height / 2));
+  tft.setCursor(numOne.anchor[0] + (numOne.width / 2) + NUMPAD_PADDING_WIDTH, numOne.anchor[1] + (numOne.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("1");
 
   // Number Two
@@ -73,9 +74,9 @@ void setup()
   tft.drawLine(numTwo.anchor[0], numTwo.anchor[1], numTwo.anchor[0], numTwo.anchor[1] + numTwo.height, HX8357_BLACK);
   tft.drawLine(numTwo.anchor[0], numTwo.anchor[1] + numTwo.height, numTwo.anchor[0] + numTwo.width, numTwo.anchor[1] + numTwo.height, HX8357_BLACK);
   tft.drawLine(numTwo.anchor[0] + numTwo.width, numTwo.anchor[1] + numTwo.height, numTwo.anchor[0] + numTwo.width, numTwo.anchor[1], HX8357_BLACK);
-  tft.setCursor(numTwo.anchor[0] + (numTwo.width / 2), numTwo.anchor[1] + (numTwo.height / 2));
+  tft.setCursor(numTwo.anchor[0] + (numTwo.width / 2) + NUMPAD_PADDING_WIDTH, numTwo.anchor[1] + (numTwo.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("2");
 
   // Number Three
@@ -92,9 +93,9 @@ void setup()
   tft.drawLine(numThree.anchor[0], numThree.anchor[1], numThree.anchor[0], numThree.anchor[1] + numThree.height, HX8357_BLACK);
   tft.drawLine(numThree.anchor[0], numThree.anchor[1] + numThree.height, numThree.anchor[0] + numThree.width, numThree.anchor[1] + numThree.height, HX8357_BLACK);
   tft.drawLine(numThree.anchor[0] + numThree.width, numThree.anchor[1] + numThree.height, numThree.anchor[0] + numThree.width, numThree.anchor[1], HX8357_BLACK);
-  tft.setCursor(numThree.anchor[0] + (numThree.width / 2), numThree.anchor[1] + (numThree.height / 2));
+  tft.setCursor(numThree.anchor[0] + (numThree.width / 2) NUMPAD_PADDING_WIDTH, numThree.anchor[1] + (numThree.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("3");
 
   // Number Four
@@ -111,9 +112,9 @@ void setup()
   tft.drawLine(numFour.anchor[0], numFour.anchor[1], numFour.anchor[0], numFour.anchor[1] + numFour.height, HX8357_BLACK);
   tft.drawLine(numFour.anchor[0], numFour.anchor[1] + numFour.height, numFour.anchor[0] + numFour.width, numFour.anchor[1] + numFour.height, HX8357_BLACK);
   tft.drawLine(numFour.anchor[0] + numFour.width, numFour.anchor[1] + numFour.height, numFour.anchor[0] + numFour.width, numFour.anchor[1], HX8357_BLACK);
-  tft.setCursor(numFour.anchor[0] + (numFour.width / 2), numFour.anchor[1] + (numFour.height / 2));
+  tft.setCursor(numFour.anchor[0] + (numFour.width / 2) + NUMPAD_PADDING_WIDTH, numFour.anchor[1] + (numFour.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("4");
 
   // Number Five
@@ -130,9 +131,9 @@ void setup()
   tft.drawLine(numFive.anchor[0], numFive.anchor[1], numFive.anchor[0], numFive.anchor[1] + numFive.height, HX8357_BLACK);
   tft.drawLine(numFive.anchor[0], numFive.anchor[1] + numFive.height, numFive.anchor[0] + numFive.width, numFive.anchor[1] + numFive.height, HX8357_BLACK);
   tft.drawLine(numFive.anchor[0] + numFive.width, numFive.anchor[1] + numFive.height, numFive.anchor[0] + numFive.width, numFive.anchor[1], HX8357_BLACK);
-  tft.setCursor(numFive.anchor[0] + (numFive.width / 2), numFive.anchor[1] + (numFive.height / 2));
+  tft.setCursor(numFive.anchor[0] + (numFive.width / 2) + NUMPAD_PADDING_WIDTH, numFive.anchor[1] + (numFive.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("5");
 
   // Number Six
@@ -149,9 +150,9 @@ void setup()
   tft.drawLine(numSix.anchor[0], numSix.anchor[1], numSix.anchor[0], numSix.anchor[1] + numSix.height, HX8357_BLACK);
   tft.drawLine(numSix.anchor[0], numSix.anchor[1] + numSix.height, numSix.anchor[0] + numSix.width, numSix.anchor[1] + numSix.height, HX8357_BLACK);
   tft.drawLine(numSix.anchor[0] + numSix.width, numSix.anchor[1] + numSix.height, numSix.anchor[0] + numSix.width, numSix.anchor[1], HX8357_BLACK);
-  tft.setCursor(numSix.anchor[0] + (numSix.width / 2), numSix.anchor[1] + (numSix.height / 2));
+  tft.setCursor(numSix.anchor[0] + (numSix.width / 2) + NUMPAD_PADDING_WIDTH, numSix.anchor[1] + (numSix.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("6");
 
   // Number Seven
@@ -168,9 +169,9 @@ void setup()
   tft.drawLine(numSeven.anchor[0], numSeven.anchor[1], numSeven.anchor[0], numSeven.anchor[1] + numSeven.height, HX8357_BLACK);
   tft.drawLine(numSeven.anchor[0], numSeven.anchor[1] + numSeven.height, numSeven.anchor[0] + numSeven.width, numSeven.anchor[1] + numSeven.height, HX8357_BLACK);
   tft.drawLine(numSeven.anchor[0] + numSeven.width, numSeven.anchor[1] + numSeven.height, numSeven.anchor[0] + numSeven.width, numSeven.anchor[1], HX8357_BLACK);
-  tft.setCursor(numSeven.anchor[0] + (numSeven.width / 2), numSeven.anchor[1] + (numSeven.height / 2));
+  tft.setCursor(numSeven.anchor[0] + (numSeven.width / 2) + NUMPAD_PADDING_WIDTH, numSeven.anchor[1] + (numSeven.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("7");
 
   // Number Eight
@@ -187,9 +188,9 @@ void setup()
   tft.drawLine(numEight.anchor[0], numEight.anchor[1], numEight.anchor[0], numEight.anchor[1] + numEight.height, HX8357_BLACK);
   tft.drawLine(numEight.anchor[0], numEight.anchor[1] + numEight.height, numEight.anchor[0] + numEight.width, numEight.anchor[1] + numEight.height, HX8357_BLACK);
   tft.drawLine(numEight.anchor[0] + numEight.width, numEight.anchor[1] + numEight.height, numEight.anchor[0] + numEight.width, numEight.anchor[1], HX8357_BLACK);
-  tft.setCursor(numEight.anchor[0] + (numEight.width / 2), numEight.anchor[1] + (numEight.height / 2));
+  tft.setCursor(numEight.anchor[0] + (numEight.width / 2) + NUMPAD_PADDING_WIDTH, numEight.anchor[1] + (numEight.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("8");
 
   // Number Nine
@@ -206,9 +207,9 @@ void setup()
   tft.drawLine(numNine.anchor[0], numNine.anchor[1], numNine.anchor[0], numNine.anchor[1] + numNine.height, HX8357_BLACK);
   tft.drawLine(numNine.anchor[0], numNine.anchor[1] + numNine.height, numNine.anchor[0] + numNine.width, numNine.anchor[1] + numNine.height, HX8357_BLACK);
   tft.drawLine(numNine.anchor[0] + numNine.width, numNine.anchor[1] + numNine.height, numNine.anchor[0] + numNine.width, numNine.anchor[1], HX8357_BLACK);
-  tft.setCursor(numNine.anchor[0] + (numNine.width / 2), numNine.anchor[1] + (numNine.height / 2));
+  tft.setCursor(numNine.anchor[0] + (numNine.width / 2) + NUMPAD_PADDING_WIDTH, numNine.anchor[1] + (numNine.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("9");
 
   // Number Zero
@@ -225,9 +226,9 @@ void setup()
   tft.drawLine(numZero.anchor[0], numZero.anchor[1], numZero.anchor[0], numZero.anchor[1] + numZero.height, HX8357_BLACK);
   tft.drawLine(numZero.anchor[0], numZero.anchor[1] + numZero.height, numZero.anchor[0] + numZero.width, numZero.anchor[1] + numZero.height, HX8357_BLACK);
   tft.drawLine(numZero.anchor[0] + numZero.width, numZero.anchor[1] + numZero.height, numZero.anchor[0] + numZero.width, numZero.anchor[1], HX8357_BLACK);
-  tft.setCursor(numZero.anchor[0] + (numZero.width / 2), numZero.anchor[1] + (numZero.height / 2));
+  tft.setCursor(numZero.anchor[0] + (numZero.width / 2) + NUMPAD_PADDING_WIDTH, numZero.anchor[1] + (numZero.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(3);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("0");
 
   // Mode button
@@ -244,14 +245,14 @@ void setup()
   tft.drawLine(modeButton.anchor[0], modeButton.anchor[1], modeButton.anchor[0], modeButton.anchor[1] + modeButton.height, HX8357_BLACK);
   tft.drawLine(modeButton.anchor[0], modeButton.anchor[1] + modeButton.height, modeButton.anchor[0] + modeButton.width, modeButton.anchor[1] + modeButton.height, HX8357_BLACK);
   tft.drawLine(modeButton.anchor[0] + modeButton.width, modeButton.anchor[1] + modeButton.height, modeButton.anchor[0] + modeButton.width, modeButton.anchor[1], HX8357_BLACK);
-  tft.setCursor(modeButton.anchor[0] + (modeButton.width / 4), modeButton.anchor[1] + (modeButton.height / 2));
+  tft.setCursor(modeButton.anchor[0] + (modeButton.width / 4) + NUMPAD_PADDING_WIDTH, modeButton.anchor[1] + (modeButton.height / 2) + NUMPAD_PADDING_HEIGHT);
   tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(2);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("a/b/O");
   changeMode("O");
 
-  tft.setTextSize(3);
-  tft.setCursor(25, 100);
+  tft.setTextSize(INPUT_BOX_TEXT_SIZE);
+  tft.setCursor(25, 120);
   tft.print("0");
 }
 
@@ -468,7 +469,7 @@ void pressButton(int button)
     buttonName = 0;
 
   clearInputNumbers();
-  tft.setCursor(25, 100);
+  tft.setCursor(25, 120);
   changeNumber(buttonName);
   tft.print(numbers.number);
 
@@ -496,11 +497,10 @@ void changeMode(const char *mode)
     numbers.mode = mode;
   }
 
-  tft.setTextSize(2);
+  tft.setTextSize(INPUT_BOX_TEXT_SIZE);
   clearInputMode();
-  tft.setCursor(61, 100);
+  tft.setCursor(81, 120);
   tft.print(numbers.mode);
-  tft.setTextSize(3);
 }
 
 unsigned changeNumber(unsigned number)
@@ -550,14 +550,14 @@ void clearInputbox()
 }
 
 // white sqaure x values
-// 0 - 60
+// 0 - 80
 void clearInputNumbers()
 {
-  tft.fillRect(inputBox.anchor[0] + 1, inputBox.anchor[1] + 1, 60 - 1, inputBox.height - 2, HX8357_WHITE);
+  tft.fillRect(inputBox.anchor[0] + 1, inputBox.anchor[1] + 1, 80 - 1, inputBox.height - 2, HX8357_WHITE);
 }
 
-// 61 - inputBox.width
+// 76 - inputBox.width
 void clearInputMode()
 {
-  tft.fillRect(61, inputBox.anchor[1] + 1, (inputBox.width - 1) - 61, inputBox.height - 1, HX8357_WHITE);
+  tft.fillRect(61, inputBox.anchor[1] + 1, (inputBox.width - 1) - 81, inputBox.height - 1, HX8357_WHITE);
 }
