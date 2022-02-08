@@ -40,6 +40,40 @@ void setup()
   tft.drawLine(inputBox.anchor[0], inputBox.anchor[1] + inputBox.height, inputBox.anchor[0] + inputBox.width, inputBox.anchor[1] + inputBox.height, HX8357_BLACK);
   tft.drawLine(inputBox.anchor[0] + inputBox.width - 1, inputBox.anchor[1] + inputBox.height, inputBox.anchor[0] + inputBox.width - 1, inputBox.anchor[1], HX8357_BLACK);
 
+  // Write Button
+  View writeButton = {0};
+  writeButton.height = 100;
+  writeButton.width = 60;
+  writeButton.anchor[0] = width - 60; // top left x-value
+  writeButton.anchor[1] = 50;         // top left y-value
+
+  // Write button
+  tft.drawLine(writeButton.anchor[0], writeButton.anchor[1], writeButton.anchor[0] + writeButton.width, writeButton.anchor[1], HX8357_BLACK);
+  tft.drawLine(writeButton.anchor[0], writeButton.anchor[1], writeButton.anchor[0], writeButton.anchor[1] + writeButton.height, HX8357_BLACK);
+  tft.drawLine(writeButton.anchor[0], writeButton.anchor[1] + writeButton.height, writeButton.anchor[0] + writeButton.width, writeButton.anchor[1] + writeButton.height, HX8357_BLACK);
+  tft.drawLine(writeButton.anchor[0] + writeButton.width - 1, writeButton.anchor[1] + writeButton.height, writeButton.anchor[0] + writeButton.width - 1, writeButton.anchor[1], HX8357_BLACK);
+  tft.setCursor(writeButton.anchor[0] + (writeButton.width / 2) + NUMPAD_PADDING_WIDTH, writeButton.anchor[1] + (writeButton.height / 2) + NUMPAD_PADDING_HEIGHT);
+  tft.setTextColor(HX8357_BLACK);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
+  tft.println("Write");
+
+  // Read Button
+  View readButton = {0};
+  readButton.height = 50;
+  readButton.width = width / 3;
+  readButton.anchor[0] = (width / 3) * 2; // top left x-value
+  readButton.anchor[1] = 420;             // top left y-value
+
+  // Read button
+  tft.drawLine(readButton.anchor[0], readButton.anchor[1], readButton.anchor[0] + readButton.width, readButton.anchor[1], HX8357_BLACK);
+  tft.drawLine(readButton.anchor[0], readButton.anchor[1], readButton.anchor[0], readButton.anchor[1] + readButton.height, HX8357_BLACK);
+  tft.drawLine(readButton.anchor[0], readButton.anchor[1] + readButton.height, readButton.anchor[0] + readButton.width, readButton.anchor[1] + readButton.height, HX8357_BLACK);
+  tft.drawLine(readButton.anchor[0] + readButton.width - 1, readButton.anchor[1] + readButton.height, readButton.anchor[0] + readButton.width - 1, readButton.anchor[1], HX8357_BLACK);
+  tft.setCursor(readButton.anchor[0] + (readButton.width / 2) + (-30), readButton.anchor[1] + (readButton.height / 2) + NUMPAD_PADDING_HEIGHT);
+  tft.setTextColor(HX8357_BLACK);
+  tft.setTextSize(NUMPAD_TEXT_SIZE);
+  tft.println("Read");
+
   // Number One
   View numOne = {0};
   numOne.height = 50;
