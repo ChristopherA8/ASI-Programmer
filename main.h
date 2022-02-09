@@ -4,6 +4,7 @@
 #include "Adafruit_HX8357.h"
 #include "TouchScreen.h"
 #include "bitmaps.h"
+#include "Button.h"
 
 // Fonts
 #include <Fonts/FreeSans12pt7b.h>
@@ -39,23 +40,23 @@ enum ButtonState
 
 int xpos, ypos = {0};
 
-typedef struct View
+typedef struct
 {
   int16_t height;
   int16_t width;
   int anchor[2];
   ButtonState state;
-} view;
+} View;
 
-typedef struct NumPad
+typedef struct
 {
-  View buttons[12];
+  Button buttons[12];
   int buttonCount;
   int number;       // 0-30
   const char *mode; // a/b/O
-} numpad;
+} NumPad;
 
-static NumPad numbers = {0};
+static NumPad numpad;
 static View inputBox = {0};
 
 // Button state (0 = No Button Pressed, 1 = Button One Pressed, 2 = Button Two Pressed...)

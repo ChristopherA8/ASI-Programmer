@@ -26,7 +26,7 @@ void setup()
   int16_t width = tft.width();
 
   // Button count is just for numbers (for now)
-  numbers.buttonCount = 10; // it will be 12 when I add "a" and "b"
+  numpad.buttonCount = 10; // it will be 12 when I add "a" and "b"
 
   // Input box
   inputBox.height = 100;
@@ -43,8 +43,8 @@ void setup()
   // Write Button
   View writeButton = {0};
   writeButton.height = 100;
-  writeButton.width = 60;
-  writeButton.anchor[0] = width - 60; // top left x-value
+  writeButton.width = 90;
+  writeButton.anchor[0] = width - 90; // top left x-value
   writeButton.anchor[1] = 50;         // top left y-value
 
   // Write button
@@ -57,239 +57,77 @@ void setup()
   tft.setTextSize(NUMPAD_TEXT_SIZE);
   tft.println("Write");
 
-  // Read Button
-  View readButton = {0};
-  readButton.height = 50;
-  readButton.width = width / 3;
-  readButton.anchor[0] = (width / 3) * 2; // top left x-value
-  readButton.anchor[1] = 420;             // top left y-value
-
-  // Read button
-  tft.drawLine(readButton.anchor[0], readButton.anchor[1], readButton.anchor[0] + readButton.width, readButton.anchor[1], HX8357_BLACK);
-  tft.drawLine(readButton.anchor[0], readButton.anchor[1], readButton.anchor[0], readButton.anchor[1] + readButton.height, HX8357_BLACK);
-  tft.drawLine(readButton.anchor[0], readButton.anchor[1] + readButton.height, readButton.anchor[0] + readButton.width, readButton.anchor[1] + readButton.height, HX8357_BLACK);
-  tft.drawLine(readButton.anchor[0] + readButton.width - 1, readButton.anchor[1] + readButton.height, readButton.anchor[0] + readButton.width - 1, readButton.anchor[1], HX8357_BLACK);
-  tft.setCursor(readButton.anchor[0] + (readButton.width / 2) + (-30), readButton.anchor[1] + (readButton.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("Read");
-
   // Number One
-  View numOne = {0};
-  numOne.height = 50;
-  numOne.width = width / 3;
-  numOne.anchor[0] = 0;   // top left x-value
-  numOne.anchor[1] = 180; // top left y-value
-
-  // Add it to the numpad
-  numbers.buttons[0] = numOne;
-
-  // Draw numOne
-  tft.drawLine(numOne.anchor[0], numOne.anchor[1], numOne.anchor[0] + numOne.width, numOne.anchor[1], HX8357_BLACK);
-  tft.drawLine(numOne.anchor[0], numOne.anchor[1], numOne.anchor[0], numOne.anchor[1] + numOne.height, HX8357_BLACK);
-  tft.drawLine(numOne.anchor[0], numOne.anchor[1] + numOne.height, numOne.anchor[0] + numOne.width, numOne.anchor[1] + numOne.height, HX8357_BLACK);
-  tft.drawLine(numOne.anchor[0] + numOne.width, numOne.anchor[1] + numOne.height, numOne.anchor[0] + numOne.width, numOne.anchor[1], HX8357_BLACK);
-  tft.setCursor(numOne.anchor[0] + (numOne.width / 2) + NUMPAD_PADDING_WIDTH, numOne.anchor[1] + (numOne.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("1");
+  numpad.buttons[0] = Button();
+  numpad.buttons[0].initButtonULwR(&tft, 0, 180, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "1", 1);
+  numpad.buttons[0].drawButton();
 
   // Number Two
-  View numTwo = {0};
-  numTwo.height = 50;
-  numTwo.width = width / 3;
-  numTwo.anchor[0] = width / 3; // top left x-value
-  numTwo.anchor[1] = 180;       // top left y-value
-
-  numbers.buttons[1] = numTwo;
-
-  // Draw numTwo
-  tft.drawLine(numTwo.anchor[0], numTwo.anchor[1], numTwo.anchor[0] + numTwo.width, numTwo.anchor[1], HX8357_BLACK);
-  tft.drawLine(numTwo.anchor[0], numTwo.anchor[1], numTwo.anchor[0], numTwo.anchor[1] + numTwo.height, HX8357_BLACK);
-  tft.drawLine(numTwo.anchor[0], numTwo.anchor[1] + numTwo.height, numTwo.anchor[0] + numTwo.width, numTwo.anchor[1] + numTwo.height, HX8357_BLACK);
-  tft.drawLine(numTwo.anchor[0] + numTwo.width, numTwo.anchor[1] + numTwo.height, numTwo.anchor[0] + numTwo.width, numTwo.anchor[1], HX8357_BLACK);
-  tft.setCursor(numTwo.anchor[0] + (numTwo.width / 2) + NUMPAD_PADDING_WIDTH, numTwo.anchor[1] + (numTwo.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("2");
+  numpad.buttons[1] = Button();
+  numpad.buttons[1].initButtonULwR(&tft, width / 3, 180, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "2", 1);
+  numpad.buttons[1].drawButton();
 
   // Number Three
-  View numThree = {0};
-  numThree.height = 50;
-  numThree.width = width / 3;
-  numThree.anchor[0] = (width / 3) * 2; // top left x-value
-  numThree.anchor[1] = 180;             // top left y-value
-
-  numbers.buttons[2] = numThree;
-
-  // Draw numThree
-  tft.drawLine(numThree.anchor[0], numThree.anchor[1], numThree.anchor[0] + numThree.width, numThree.anchor[1], HX8357_BLACK);
-  tft.drawLine(numThree.anchor[0], numThree.anchor[1], numThree.anchor[0], numThree.anchor[1] + numThree.height, HX8357_BLACK);
-  tft.drawLine(numThree.anchor[0], numThree.anchor[1] + numThree.height, numThree.anchor[0] + numThree.width, numThree.anchor[1] + numThree.height, HX8357_BLACK);
-  tft.drawLine(numThree.anchor[0] + numThree.width, numThree.anchor[1] + numThree.height, numThree.anchor[0] + numThree.width, numThree.anchor[1], HX8357_BLACK);
-  tft.setCursor(numThree.anchor[0] + (numThree.width / 2) NUMPAD_PADDING_WIDTH, numThree.anchor[1] + (numThree.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("3");
+  numpad.buttons[2] = Button();
+  numpad.buttons[2].initButtonULwR(&tft, (width / 3) * 2, 180, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "3", 1);
+  numpad.buttons[2].drawButton();
 
   // Number Four
-  View numFour = {0};
-  numFour.height = 50;
-  numFour.width = width / 3;
-  numFour.anchor[0] = 0;   // top left x-value
-  numFour.anchor[1] = 260; // top left y-value
-
-  numbers.buttons[3] = numFour;
-
-  // Draw numFour
-  tft.drawLine(numFour.anchor[0], numFour.anchor[1], numFour.anchor[0] + numFour.width, numFour.anchor[1], HX8357_BLACK);
-  tft.drawLine(numFour.anchor[0], numFour.anchor[1], numFour.anchor[0], numFour.anchor[1] + numFour.height, HX8357_BLACK);
-  tft.drawLine(numFour.anchor[0], numFour.anchor[1] + numFour.height, numFour.anchor[0] + numFour.width, numFour.anchor[1] + numFour.height, HX8357_BLACK);
-  tft.drawLine(numFour.anchor[0] + numFour.width, numFour.anchor[1] + numFour.height, numFour.anchor[0] + numFour.width, numFour.anchor[1], HX8357_BLACK);
-  tft.setCursor(numFour.anchor[0] + (numFour.width / 2) + NUMPAD_PADDING_WIDTH, numFour.anchor[1] + (numFour.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("4");
+  numpad.buttons[3] = Button();
+  numpad.buttons[3].initButtonULwR(&tft, 0, 260, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "4", 1);
+  numpad.buttons[3].drawButton();
 
   // Number Five
-  View numFive = {0};
-  numFive.height = 50;
-  numFive.width = width / 3;
-  numFive.anchor[0] = width / 3; // top left x-value
-  numFive.anchor[1] = 260;       // top left y-value
-
-  numbers.buttons[4] = numFive;
-
-  // Draw numFive
-  tft.drawLine(numFive.anchor[0], numFive.anchor[1], numFive.anchor[0] + numFive.width, numFive.anchor[1], HX8357_BLACK);
-  tft.drawLine(numFive.anchor[0], numFive.anchor[1], numFive.anchor[0], numFive.anchor[1] + numFive.height, HX8357_BLACK);
-  tft.drawLine(numFive.anchor[0], numFive.anchor[1] + numFive.height, numFive.anchor[0] + numFive.width, numFive.anchor[1] + numFive.height, HX8357_BLACK);
-  tft.drawLine(numFive.anchor[0] + numFive.width, numFive.anchor[1] + numFive.height, numFive.anchor[0] + numFive.width, numFive.anchor[1], HX8357_BLACK);
-  tft.setCursor(numFive.anchor[0] + (numFive.width / 2) + NUMPAD_PADDING_WIDTH, numFive.anchor[1] + (numFive.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("5");
+  numpad.buttons[4] = Button();
+  numpad.buttons[4].initButtonULwR(&tft, width / 3, 260, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "5", 1);
+  numpad.buttons[4].drawButton();
 
   // Number Six
-  View numSix = {0};
-  numSix.height = 50;
-  numSix.width = width / 3;
-  numSix.anchor[0] = (width / 3) * 2; // top left x-value
-  numSix.anchor[1] = 260;             // top left y-value
-
-  numbers.buttons[5] = numSix;
-
-  // Draw numSix
-  tft.drawLine(numSix.anchor[0], numSix.anchor[1], numSix.anchor[0] + numSix.width, numSix.anchor[1], HX8357_BLACK);
-  tft.drawLine(numSix.anchor[0], numSix.anchor[1], numSix.anchor[0], numSix.anchor[1] + numSix.height, HX8357_BLACK);
-  tft.drawLine(numSix.anchor[0], numSix.anchor[1] + numSix.height, numSix.anchor[0] + numSix.width, numSix.anchor[1] + numSix.height, HX8357_BLACK);
-  tft.drawLine(numSix.anchor[0] + numSix.width, numSix.anchor[1] + numSix.height, numSix.anchor[0] + numSix.width, numSix.anchor[1], HX8357_BLACK);
-  tft.setCursor(numSix.anchor[0] + (numSix.width / 2) + NUMPAD_PADDING_WIDTH, numSix.anchor[1] + (numSix.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("6");
+  numpad.buttons[5] = Button();
+  numpad.buttons[5].initButtonULwR(&tft, (width / 3) * 2, 260, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "6", 1);
+  numpad.buttons[5].drawButton();
 
   // Number Seven
-  View numSeven = {0};
-  numSeven.height = 50;
-  numSeven.width = width / 3;
-  numSeven.anchor[0] = 0;   // top left x-value
-  numSeven.anchor[1] = 340; // top left y-value
-
-  numbers.buttons[6] = numSeven;
-
-  // Draw numSeven
-  tft.drawLine(numSeven.anchor[0], numSeven.anchor[1], numSeven.anchor[0] + numSeven.width, numSeven.anchor[1], HX8357_BLACK);
-  tft.drawLine(numSeven.anchor[0], numSeven.anchor[1], numSeven.anchor[0], numSeven.anchor[1] + numSeven.height, HX8357_BLACK);
-  tft.drawLine(numSeven.anchor[0], numSeven.anchor[1] + numSeven.height, numSeven.anchor[0] + numSeven.width, numSeven.anchor[1] + numSeven.height, HX8357_BLACK);
-  tft.drawLine(numSeven.anchor[0] + numSeven.width, numSeven.anchor[1] + numSeven.height, numSeven.anchor[0] + numSeven.width, numSeven.anchor[1], HX8357_BLACK);
-  tft.setCursor(numSeven.anchor[0] + (numSeven.width / 2) + NUMPAD_PADDING_WIDTH, numSeven.anchor[1] + (numSeven.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("7");
+  numpad.buttons[6] = Button();
+  numpad.buttons[6].initButtonULwR(&tft, 0, 340, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "7", 1);
+  numpad.buttons[6].drawButton();
 
   // Number Eight
-  View numEight = {0};
-  numEight.height = 50;
-  numEight.width = width / 3;
-  numEight.anchor[0] = width / 3; // top left x-value
-  numEight.anchor[1] = 340;       // top left y-value
-
-  numbers.buttons[7] = numEight;
-
-  // Draw numEight
-  tft.drawLine(numEight.anchor[0], numEight.anchor[1], numEight.anchor[0] + numEight.width, numEight.anchor[1], HX8357_BLACK);
-  tft.drawLine(numEight.anchor[0], numEight.anchor[1], numEight.anchor[0], numEight.anchor[1] + numEight.height, HX8357_BLACK);
-  tft.drawLine(numEight.anchor[0], numEight.anchor[1] + numEight.height, numEight.anchor[0] + numEight.width, numEight.anchor[1] + numEight.height, HX8357_BLACK);
-  tft.drawLine(numEight.anchor[0] + numEight.width, numEight.anchor[1] + numEight.height, numEight.anchor[0] + numEight.width, numEight.anchor[1], HX8357_BLACK);
-  tft.setCursor(numEight.anchor[0] + (numEight.width / 2) + NUMPAD_PADDING_WIDTH, numEight.anchor[1] + (numEight.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("8");
+  numpad.buttons[7] = Button();
+  numpad.buttons[7].initButtonULwR(&tft, width / 3, 340, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "8", 1);
+  numpad.buttons[7].drawButton();
 
   // Number Nine
-  View numNine = {0};
-  numNine.height = 50;
-  numNine.width = width / 3;
-  numNine.anchor[0] = (width / 3) * 2; // top left x-value
-  numNine.anchor[1] = 340;             // top left y-value
-
-  numbers.buttons[8] = numNine;
-
-  // Draw numNine
-  tft.drawLine(numNine.anchor[0], numNine.anchor[1], numNine.anchor[0] + numNine.width, numNine.anchor[1], HX8357_BLACK);
-  tft.drawLine(numNine.anchor[0], numNine.anchor[1], numNine.anchor[0], numNine.anchor[1] + numNine.height, HX8357_BLACK);
-  tft.drawLine(numNine.anchor[0], numNine.anchor[1] + numNine.height, numNine.anchor[0] + numNine.width, numNine.anchor[1] + numNine.height, HX8357_BLACK);
-  tft.drawLine(numNine.anchor[0] + numNine.width, numNine.anchor[1] + numNine.height, numNine.anchor[0] + numNine.width, numNine.anchor[1], HX8357_BLACK);
-  tft.setCursor(numNine.anchor[0] + (numNine.width / 2) + NUMPAD_PADDING_WIDTH, numNine.anchor[1] + (numNine.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("9");
+  numpad.buttons[8] = Button();
+  numpad.buttons[8].initButtonULwR(&tft, (width / 3) * 2, 340, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "9", 1);
+  numpad.buttons[8].drawButton();
 
   // Number Zero
-  View numZero = {0};
-  numZero.height = 50;
-  numZero.width = width / 3;
-  numZero.anchor[0] = width / 3; // top left x-value
-  numZero.anchor[1] = 420;       // top left y-value
+  numpad.buttons[9] = Button();
+  numpad.buttons[9].initButtonULwR(&tft, width / 3, 420, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "0", 1);
+  numpad.buttons[9].drawButton();
 
-  numbers.buttons[9] = numZero;
+  // Mode Button
+  numpad.buttons[10] = Button();
+  numpad.buttons[10].initButtonULwR(&tft, 0, 420, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "a/b/o", 1);
+  numpad.buttons[10].drawButton();
+  // changeMode("O");
 
-  // Draw numZero
-  tft.drawLine(numZero.anchor[0], numZero.anchor[1], numZero.anchor[0] + numZero.width, numZero.anchor[1], HX8357_BLACK);
-  tft.drawLine(numZero.anchor[0], numZero.anchor[1], numZero.anchor[0], numZero.anchor[1] + numZero.height, HX8357_BLACK);
-  tft.drawLine(numZero.anchor[0], numZero.anchor[1] + numZero.height, numZero.anchor[0] + numZero.width, numZero.anchor[1] + numZero.height, HX8357_BLACK);
-  tft.drawLine(numZero.anchor[0] + numZero.width, numZero.anchor[1] + numZero.height, numZero.anchor[0] + numZero.width, numZero.anchor[1], HX8357_BLACK);
-  tft.setCursor(numZero.anchor[0] + (numZero.width / 2) + NUMPAD_PADDING_WIDTH, numZero.anchor[1] + (numZero.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("0");
-
-  // Mode button
-  View modeButton = {0};
-  modeButton.height = 50;
-  modeButton.width = width / 3;
-  modeButton.anchor[0] = 0;   // top left x-value
-  modeButton.anchor[1] = 420; // top left y-value
-
-  numbers.buttons[10] = modeButton;
-
-  // Draw modeButton
-  tft.drawLine(modeButton.anchor[0], modeButton.anchor[1], modeButton.anchor[0] + modeButton.width, modeButton.anchor[1], HX8357_BLACK);
-  tft.drawLine(modeButton.anchor[0], modeButton.anchor[1], modeButton.anchor[0], modeButton.anchor[1] + modeButton.height, HX8357_BLACK);
-  tft.drawLine(modeButton.anchor[0], modeButton.anchor[1] + modeButton.height, modeButton.anchor[0] + modeButton.width, modeButton.anchor[1] + modeButton.height, HX8357_BLACK);
-  tft.drawLine(modeButton.anchor[0] + modeButton.width, modeButton.anchor[1] + modeButton.height, modeButton.anchor[0] + modeButton.width, modeButton.anchor[1], HX8357_BLACK);
-  tft.setCursor(modeButton.anchor[0] + (modeButton.width / 4) + NUMPAD_PADDING_WIDTH, modeButton.anchor[1] + (modeButton.height / 2) + NUMPAD_PADDING_HEIGHT);
-  tft.setTextColor(HX8357_BLACK);
-  tft.setTextSize(NUMPAD_TEXT_SIZE);
-  tft.println("a/b/O");
-  changeMode("O");
+  // Read Button
+  numpad.buttons[11] = Button();
+  numpad.buttons[11].initButtonULwR(&tft, (width / 3) * 2, 420, width / 3, 50, 8, HX8357_BLACK, HX8357_WHITE, HX8357_BLACK, "Read", 1);
+  numpad.buttons[11].drawButton();
 
   tft.setTextSize(INPUT_BOX_TEXT_SIZE);
   tft.setCursor(25, 120);
   tft.print("0");
 }
 
+void loop()
+{
+}
+
+/*
 void loop()
 {
 
@@ -299,12 +137,12 @@ void loop()
   if (p.z > MIN_PRESSURE && p.z < MAX_PRESSURE)
   {
     // Number buttons
-    for (int i = 0; i < numbers.buttonCount; i++)
+    for (int i = 0; i < numpad.buttonCount; i++)
     {
-      int width = numbers.buttons[i].width;
-      int height = numbers.buttons[i].height;
-      int topLeftX = numbers.buttons[i].anchor[0];
-      int topLeftY = numbers.buttons[i].anchor[1];
+      int width = numpad.buttons[i].width;
+      int height = numpad.buttons[i].height;
+      int topLeftX = numpad.buttons[i].anchor[0];
+      int topLeftY = numpad.buttons[i].anchor[1];
       int rightSide = topLeftX + width;
       int bottomSide = topLeftY + height;
 
@@ -317,10 +155,10 @@ void loop()
     }
 
     // Other Buttons
-    int width = numbers.buttons[10].width;
-    int height = numbers.buttons[10].height;
-    int topLeftX = numbers.buttons[10].anchor[0];
-    int topLeftY = numbers.buttons[10].anchor[1];
+    int width = numpad.buttons[10].width;
+    int height = numpad.buttons[10].height;
+    int topLeftX = numpad.buttons[10].anchor[0];
+    int topLeftY = numpad.buttons[10].anchor[1];
     int rightSide = topLeftX + width;
     int bottomSide = topLeftY + height;
 
@@ -377,16 +215,16 @@ void checkButtonState(int state)
   switch (state)
   {
   case 0:
-    for (int i = 0; i < numbers.buttonCount + 1; i++)
+    for (int i = 0; i < numpad.buttonCount + 1; i++)
     {
       // On button release
-      if (numbers.buttons[i].state == Pressed)
+      if (numpad.buttons[i].state == Pressed)
       {
         // Button released
-        int width = numbers.buttons[i].width;
-        int height = numbers.buttons[i].height;
-        int topLeftX = numbers.buttons[i].anchor[0];
-        int topLeftY = numbers.buttons[i].anchor[1];
+        int width = numpad.buttons[i].width;
+        int height = numpad.buttons[i].height;
+        int topLeftX = numpad.buttons[i].anchor[0];
+        int topLeftY = numpad.buttons[i].anchor[1];
         int topRightX = topLeftX + width;
         int topRightY = topLeftY;
         int bottomLeftX = topLeftX;
@@ -398,84 +236,84 @@ void checkButtonState(int state)
       }
 
       // Reset button states
-      numbers.buttons[i].state = Unpressed;
+      numpad.buttons[i].state = Unpressed;
     }
     break;
   case 1:
-    if (numbers.buttons[0].state == Unpressed)
+    if (numpad.buttons[0].state == Unpressed)
     {
       pressButton(0);
-      numbers.buttons[0].state = Pressed;
+      numpad.buttons[0].state = Pressed;
     }
     break;
   case 2:
-    if (numbers.buttons[1].state == Unpressed)
+    if (numpad.buttons[1].state == Unpressed)
     {
       pressButton(1);
-      numbers.buttons[1].state = Pressed;
+      numpad.buttons[1].state = Pressed;
     }
     break;
   case 3:
-    if (numbers.buttons[2].state == Unpressed)
+    if (numpad.buttons[2].state == Unpressed)
     {
       pressButton(2);
-      numbers.buttons[2].state = Pressed;
+      numpad.buttons[2].state = Pressed;
     }
     break;
   case 4:
-    if (numbers.buttons[3].state == Unpressed)
+    if (numpad.buttons[3].state == Unpressed)
     {
       pressButton(3);
-      numbers.buttons[3].state = Pressed;
+      numpad.buttons[3].state = Pressed;
     }
     break;
   case 5:
-    if (numbers.buttons[4].state == Unpressed)
+    if (numpad.buttons[4].state == Unpressed)
     {
       pressButton(4);
-      numbers.buttons[4].state = Pressed;
+      numpad.buttons[4].state = Pressed;
     }
     break;
   case 6:
-    if (numbers.buttons[5].state == Unpressed)
+    if (numpad.buttons[5].state == Unpressed)
     {
       pressButton(5);
-      numbers.buttons[5].state = Pressed;
+      numpad.buttons[5].state = Pressed;
     }
     break;
   case 7:
-    if (numbers.buttons[6].state == Unpressed)
+    if (numpad.buttons[6].state == Unpressed)
     {
       pressButton(6);
-      numbers.buttons[6].state = Pressed;
+      numpad.buttons[6].state = Pressed;
     }
     break;
   case 8:
-    if (numbers.buttons[7].state == Unpressed)
+    if (numpad.buttons[7].state == Unpressed)
     {
       pressButton(7);
-      numbers.buttons[7].state = Pressed;
+      numpad.buttons[7].state = Pressed;
     }
     break;
   case 9:
-    if (numbers.buttons[8].state == Unpressed)
+    if (numpad.buttons[8].state == Unpressed)
     {
       pressButton(8);
-      numbers.buttons[8].state = Pressed;
+      numpad.buttons[8].state = Pressed;
     }
     break;
   case 10:
-    if (numbers.buttons[9].state == Unpressed)
+    if (numpad.buttons[9].state == Unpressed)
     {
       pressButton(9);
-      numbers.buttons[9].state = Pressed;
+      numpad.buttons[9].state = Pressed;
     }
   case 11: // a/b/O button
-    if (numbers.buttons[10].state == Unpressed)
+    if (numpad.buttons[10].state == Unpressed)
     {
       // pressButton(10);
-      changeMode(numbers.mode);
-      numbers.buttons[10].state = Pressed;
+      changeMode(numpad.mode);
+      numpad.buttons[10].state = Pressed;
     }
     break;
   default:
@@ -485,10 +323,10 @@ void checkButtonState(int state)
 
 void pressButton(int button)
 {
-  int width = numbers.buttons[button].width;
-  int height = numbers.buttons[button].height;
-  int topLeftX = numbers.buttons[button].anchor[0];
-  int topLeftY = numbers.buttons[button].anchor[1];
+  int width = numpad.buttons[button].width;
+  int height = numpad.buttons[button].height;
+  int topLeftX = numpad.buttons[button].anchor[0];
+  int topLeftY = numpad.buttons[button].anchor[1];
   int topRightX = topLeftX + width;
   int topRightY = topLeftY;
   int bottomLeftX = topLeftX;
@@ -505,7 +343,7 @@ void pressButton(int button)
   clearInputNumbers();
   tft.setCursor(25, 120);
   changeNumber(buttonName);
-  tft.print(numbers.number);
+  tft.print(numpad.number);
 
   char str[128];
   snprintf(str, 128, "Button %d Pressed", buttonName);
@@ -516,52 +354,52 @@ void changeMode(const char *mode)
 {
   if (mode == "a")
   {
-    numbers.mode = "b";
+    numpad.mode = "b";
   }
   else if (mode == "b")
   {
-    numbers.mode = "O";
+    numpad.mode = "O";
   }
   else if (mode == "O")
   {
-    numbers.mode = "a";
+    numpad.mode = "a";
   }
   else
   {
-    numbers.mode = mode;
+    numpad.mode = mode;
   }
 
   tft.setTextSize(INPUT_BOX_TEXT_SIZE);
   clearInputMode();
   tft.setCursor(81, 120);
-  tft.print(numbers.mode);
+  tft.print(numpad.mode);
 }
 
 unsigned changeNumber(unsigned number)
 {
-  if (getNumberLength(numbers.number) >= 2 || numbers.number == 0)
+  if (getNumberLength(numpad.number) >= 2 || numpad.number == 0)
   {
     if (number <= 3)
     {
-      numbers.number = number;
-      return numbers.number;
+      numpad.number = number;
+      return numpad.number;
     }
     else
     {
-      numbers.number = 0;
-      return numbers.number;
+      numpad.number = 0;
+      return numpad.number;
     }
   }
   else
   {
-    if (numbers.number == 3 && number != 0)
+    if (numpad.number == 3 && number != 0)
     {
-      numbers.number = 0;
-      return numbers.number;
+      numpad.number = 0;
+      return numpad.number;
     }
 
-    numbers.number = concatenate(numbers.number, number);
-    return numbers.number;
+    numpad.number = concatenate(numpad.number, number);
+    return numpad.number;
   }
 }
 
@@ -595,3 +433,4 @@ void clearInputMode()
 {
   tft.fillRect(61, inputBox.anchor[1] + 1, (inputBox.width - 1) - 81, inputBox.height - 1, HX8357_WHITE);
 }
+*/
